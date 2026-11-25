@@ -1,0 +1,41 @@
+class Tarea:
+    def __init__(self, titulo, prioridad="baja", completada=False):
+        self.titulo = titulo
+        self.prioridad = prioridad
+        self.completada = completada
+
+    def marcar_completada(self):
+        self.completada = True
+
+
+class ListaTareas:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self._tareas = []
+
+    def agregar_tarea(self, tarea):
+        self._tareas.append(tarea)
+
+    def listar_pendientes(self):
+        return [tarea for tarea in self._tareas if not tarea.completada]
+
+    def contar_por_prioridad(self, prioridad):
+        return sum(1 for tarea in self._tareas if tarea.prioridad == prioridad)
+
+
+# --- Pruebas ---
+if __name__ == "__main__":
+    t1 = Tarea("Tomar agua", "alta")
+    t2 = Tarea("Llamar a Octavio")
+    t3 = Tarea("Investigar PC", "media", True)
+
+    t1.marcar_completada()
+
+    lt = ListaTareas("Planificación del día")
+    lt.agregar_tarea(t1)
+    print(lt.listar_pendientes())          # []
+    lt.agregar_tarea(t2)
+    lt.agregar_tarea(t3)
+    print(lt.contar_por_prioridad("baja")) # 1
+
+    
